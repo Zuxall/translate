@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: video-translator-api
+    env: node
+    buildCommand: npm install && npm run install-backend
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+      - key: FRONTEND_URL
+        value: https://video-translator-web.onrender.com
+      - key: MAX_FILE_SIZE
+        value: 1073741824
+      - key: UPLOAD_CHUNK_SIZE
+        value: 10485760
+
+  - type: web
+    name: video-translator-web
+    env: static
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://video-translator-api.onrender.com
